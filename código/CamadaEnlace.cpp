@@ -95,7 +95,27 @@ int *CamadaEnlaceDadosTransmissoraControledeErro(int quadro[]){
 
       quadroControle = CamadaEnlaceDadosTransmissoraControleDeErroBitParideImpar(quadro);
 
+      break; 
 
+    //case 2: 
+
+      /*
+      size = find_size(quadro); 
+      quadroControle = new (nothrow) int[size+1];
+
+      quadroControle = CamadaEnlaceDadosTransmissoraControleDeErroCRC(quadro);
+      break; 
+      */
+
+    //case 3: 
+
+      /*
+      size = find_size(quadro); 
+      quadroControle = new (nothrow) int[size+1];
+
+      quadroControle = CamadaEnlaceDadosTransmissoraControleDeErroCodigodeHamming(quadro);
+      break; 
+      */
 
   }
 
@@ -224,6 +244,21 @@ int *CamadaEnlaceDadosTransmissoraControleDeErroBitParidePar(int quadro[]){
   return (fluxoCodificado);
 
 }
+
+/*
+int *CamadaEnlaceDadosTransmissoraControleDeErroCRC(int quadro[]){
+
+  return 0; 
+
+}
+
+int *CamadaEnlaceDadosTransmissoraControleDeErroCodigodeHamming(int quadro[]){
+
+  return 0;
+
+}
+*/
+
 
 //-----------------------------------------------------
 
@@ -707,6 +742,16 @@ int *CamadaDeEnlaceReceptoraControleDeErro(int quadro[]){
 
       quadro_controle = CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadeImpar(quadro);
       break; 
+        
+    case 2:
+
+      //quadro_controle = CamadaEnlaceDadosReceptoraControleDeErroCRC(quadro);
+      break; 
+
+    case 3:
+
+      //quadro_controle = CamadaEnlaceDadosReceptoraControleDeErroCodigodeHamming(quadro);
+      break; 
 
   }
 
@@ -849,6 +894,22 @@ int *CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar(int quadro[]){
 
 
 }
+
+/*
+int *CamadaEnlaceDadosReceptoraControleDeErroCRC(int quadro[]){
+
+  return 0; 
+
+}
+
+int *CamadaEnlaceDadosReceptoraControleDeErroCodigodeHamming(int quadro[]){
+
+  return 0; 
+
+}
+*/
+
+//-----------------------------------------------------
 
 int *CamadaDeEnlaceReceptoraEnquadramento(int quadro[])
 {

@@ -14,12 +14,17 @@
 //-----------------------------------------------------
 
 #define TIPO_DE_ERRO 1
+// TIPO_DE_ERRO 0 = Paridade Par 
+// TIPO_DE_ERRO 1 = Paridade Impar
+// TIPO_DE_ERRO 2 = Erro CRC
+// TIPO_DE_ERRO 3 = Código de Hamming 
 
 #define ERRO 1
 // ERRO 0 = "Modo caos"
 // ERRO 1 = "Modo Conservador"
 
 #define CHANCE_DO_ERRO 0
+// Definir um número entre 0 e 100 
 
 //-----------------------------------------------------
 
@@ -70,6 +75,8 @@ int *CamadaEnlaceDadosTransmissoraControledeErro(int *quadro);
 // Transmissão: Controle de erros
 int *CamadaEnlaceDadosTransmissoraControleDeErroBitParidePar(int *quadro); 
 int *CamadaEnlaceDadosTransmissoraControleDeErroBitParideImpar(int *quadro);
+//int *CamadaEnlaceDadosTransmissoraControleDeErroCRC(int *quadro); 
+//int *CamadaEnlaceDadosTransmissoraControleDeErroCodigodeHamming(int *quadro);
 
 // Recepção  
 int *CamadaDeEnlaceReceptoraControleDeErro(int *quadro);
@@ -77,5 +84,7 @@ int *CamadaDeEnlaceReceptoraControleDeErro(int *quadro);
 // Recepção: Controle de erros
 int *CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar(int *quadro);
 int *CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadeImpar(int *quadro);
+//int *CamadaEnlaceDadosReceptoraControleDeErroCRC(int *quadro);
+//int *CamadaEnlaceDadosReceptoraControleDeErroCodigodeHamming(int *quadro);
 
 //-----------------------------------------------------
