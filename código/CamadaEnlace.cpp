@@ -18,6 +18,15 @@ using namespace std;
 // https://github.com/gui1080/TR1_Trabalho_Camada_de_Enlace
 // (repositório privado na entrega do trabalho)
 
+//---------------------------------------------------------
+
+// CODIFICAÇÃO RELATIVA AO TRABALHO 3
+// (implementação de detecção de erros na camada de enlace)
+
+// https://github.com/gui1080/TR1_Trabalho_Deteccao_Correcao_de_Erros
+// (repositório privado na entrega do trabalho)
+
+
 // TRANSMISSÃO
 //-----------------------------------------------------
 
@@ -30,12 +39,193 @@ void CamadaEnlaceDadosTransmissora(int quadro[])
   int size = find_size(quadro);
 
   int *quadro_novo;
+
   // coloca o enquadramento
   quadro_novo = CamadadeEnlaceTransmissoraEnquadramento(quadro);
 
+  int *quadro_final; 
+
+  quadro_final = CamadaEnlaceDadosTransmissoraControledeErro(quadro_novo); 
+
+
+  int x; 
+
+  printf("\nRECEBIDO NA CAMADA TRANSMISSORA\n");
+
+  int size2 = find_size(quadro_final); 
+
+  //printf("%d", size2); 
+
+  for (x = 0; x<(size2); x++){
+    printf("%d", quadro_final[x]); 
+  }
+
+  printf("\n");
+
+  
+
   // manda para a camada física transmissora mandar a mensagem com enquadramento
-  CamadaFisicaTransmissora(quadro_novo);
+  CamadaFisicaTransmissora(quadro_final);
 }
+
+// CONTROLE DE ERROS (Transmissão)
+//-----------------------------------------------------
+
+int *CamadaEnlaceDadosTransmissoraControledeErro(int quadro[]){
+
+  int tipo_de_erro = TIPO_DE_ERRO; 
+  int *quadroControle;
+
+  int size;  
+
+  switch (tipo_de_erro){
+    case 0:   
+
+      size = find_size(quadro); 
+      quadroControle = new (nothrow) int[size+1];
+
+      quadroControle = CamadaEnlaceDadosTransmissoraControleDeErroBitParidePar(quadro);
+      
+      break;
+
+    case 1: 
+
+      size = find_size(quadro); 
+      quadroControle = new (nothrow) int[size+1];
+
+      quadroControle = CamadaEnlaceDadosTransmissoraControleDeErroBitParideImpar(quadro);
+
+
+
+  }
+
+  return (quadroControle); 
+
+}
+
+int *CamadaEnlaceDadosTransmissoraControleDeErroBitParideImpar(int quadro[]){
+
+  int size = find_size(quadro);
+
+  int *fluxoCodificado;
+
+  fluxoCodificado = new (nothrow) int[size+4];
+
+  int x; 
+
+  int acumulador = 0; 
+
+  int resultado = 0; 
+
+  for (x = 0; x < size; x++){
+
+    fluxoCodificado[x] = quadro[x]; 
+
+    if(quadro[x] == 1){
+    
+      acumulador++; 
+    
+    }
+
+  }
+
+  resultado = (acumulador % 2);
+
+  if(resultado == 0){
+    // par
+
+    fluxoCodificado[size+3] = 1;
+
+  }
+  else{
+
+    fluxoCodificado[size+3] = 0;
+
+  }
+
+  fluxoCodificado[size] = 0;
+  fluxoCodificado[size+1] = 0;
+  fluxoCodificado[size+2] = 0;
+
+  fluxoCodificado[size+4] = 2; 
+
+  printf("\nPARIDADE IMPAR\n"); 
+
+  for (x = 0; x < (size+1); x++){
+
+    printf("%d", fluxoCodificado[x]); 
+
+  }
+
+  printf("\n"); 
+
+  return (fluxoCodificado);
+
+}
+
+int *CamadaEnlaceDadosTransmissoraControleDeErroBitParidePar(int quadro[]){
+
+  int size = find_size(quadro);
+
+  int *fluxoCodificado;
+
+  fluxoCodificado = new (nothrow) int[size+4];
+
+  int x; 
+
+  int acumulador = 0; 
+
+  int resultado = 0; 
+
+  for (x = 0; x < size; x++){
+
+    fluxoCodificado[x] = quadro[x]; 
+
+    if(quadro[x] == 1){
+    
+      acumulador++; 
+    
+    }
+
+  }
+
+  resultado = (acumulador % 2);
+
+  if(resultado == 0){
+    // par
+
+    fluxoCodificado[size+3] = 0;
+
+  }
+  else{
+
+    fluxoCodificado[size+3] = 1;
+
+  }
+
+  fluxoCodificado[size] = 0;
+  fluxoCodificado[size+1] = 0;
+  fluxoCodificado[size+2] = 0;
+
+  fluxoCodificado[size+4] = 2; 
+
+  printf("\nPARIDADE PAR\n"); 
+
+  for (x = 0; x < (size+1); x++){
+
+    printf("%d", fluxoCodificado[x]); 
+
+  }
+
+  printf("\n"); 
+
+   
+
+  return (fluxoCodificado);
+
+}
+
+//-----------------------------------------------------
 
 int *CamadadeEnlaceTransmissoraEnquadramento(int quadro[])
 {
@@ -469,12 +659,22 @@ void CamadaEnlaceDadosReceptora(int quadro[])
 
   int i = find_size(quadro);
 
+  int *quadro_controle;
+
+  quadro_controle = new (nothrow) int[i-1]; 
+
+  quadro_controle = CamadaDeEnlaceReceptoraControleDeErro(quadro);
+
+  //-------------------------------------
+
+  //int i = find_size(quadro);
+
   int *quadro_novo;
 
-  quadro_novo = new (nothrow) int[i];
+  quadro_novo = new (nothrow) int[i-1];
 
   // tira do enquadramento
-  quadro_novo = CamadaDeEnlaceReceptoraEnquadramento(quadro);
+  quadro_novo = CamadaDeEnlaceReceptoraEnquadramento(quadro_controle);
 
   int *quadroFinal;
   int l = find_size(quadro_novo);
@@ -488,6 +688,166 @@ void CamadaEnlaceDadosReceptora(int quadro[])
 
   // passa adiante para a camada receptora transformar os bits em strings
   CamadaDeAplicacaoReceptora(quadroFinal);
+}
+
+int *CamadaDeEnlaceReceptoraControleDeErro(int quadro[]){
+
+  int tipo_de_erro = TIPO_DE_ERRO;
+
+  int *quadro_controle; 
+
+  switch(tipo_de_erro){
+
+    case 0:
+
+      quadro_controle = CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar(quadro);
+      break; 
+
+    case 1:
+
+      quadro_controle = CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadeImpar(quadro);
+      break; 
+
+  }
+
+  return (quadro_controle);
+
+}
+
+// CONTROLE DE ERROS (Recepção)
+//-----------------------------------------------------
+
+int *CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadeImpar(int quadro[]){
+
+
+  int size = find_size(quadro);
+
+  int *fluxoCodificado;
+
+  fluxoCodificado = new (nothrow) int[size-4];
+
+  int x; 
+
+  int acumulador = 0; 
+
+  int resultado = 0; 
+
+  for (x = 0; x < size; x++){
+
+    if(quadro[x] == 1){
+      acumulador++; 
+    }
+
+  }
+
+  resultado = (acumulador % 2);
+
+  printf("\nresultado:%d\n", resultado); 
+
+  if(resultado == 1){
+
+    printf("\nDEBOA\n"); 
+
+    // certo
+
+    for (x = 0; x < size-4; x++){
+
+      fluxoCodificado[x] = quadro[x];  
+
+    }
+
+  }
+  else{
+
+    printf("\nAtenção! Um erro foi encontrado ao se checar o Bit de Paridade Impar!\n\nO programa será encerrado agora.\n\n");
+
+    exit(0);
+
+  }
+
+
+  printf("\nACHANDO A PARIDADE IMPAR\n"); 
+
+  for (x = 0; x < (size-4); x++){
+
+    printf("%d", fluxoCodificado[x]); 
+
+  }
+
+  printf("\n"); 
+
+  fluxoCodificado[size-4] = 2; 
+
+  return (fluxoCodificado);
+
+
+
+
+}
+
+int *CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar(int quadro[]){
+
+  int size = find_size(quadro);
+
+  int *fluxoCodificado;
+
+  fluxoCodificado = new (nothrow) int[size-4];
+
+  int x; 
+
+  int acumulador = 0; 
+
+  int resultado = 0; 
+
+  for (x = 0; x < size; x++){
+
+    if(quadro[x] == 1){
+      acumulador++; 
+    }
+
+  }
+
+  resultado = (acumulador % 2);
+
+  printf("\nresultado:%d\n", resultado); 
+
+  if(resultado == 0){
+
+    printf("\nDEBOA\n"); 
+
+    // certo
+
+    for (x = 0; x < size-4; x++){
+
+      fluxoCodificado[x] = quadro[x];  
+
+    }
+
+  }
+  else{
+
+    printf("\nAtenção! Um erro foi encontrado ao se checar o Bit de Paridade Par!\n\nO programa será encerrado agora.\n\n");
+
+    exit(0);
+
+  }
+
+
+  printf("\nACHANDO A PARIDADE PAR\n"); 
+
+  for (x = 0; x < (size-4); x++){
+
+    printf("%d", fluxoCodificado[x]); 
+
+  }
+
+  printf("\n"); 
+
+  fluxoCodificado[size-4] = 2; 
+
+  return (fluxoCodificado);
+
+
 }
 
 int *CamadaDeEnlaceReceptoraEnquadramento(int quadro[])

@@ -3,6 +3,25 @@
 #include <string>
 #include <stdlib.h>
 
+//-----------------------------------------------------
+
+// CODIFICAÇÃO RELATIVA AO TRABALHO 3
+// (implementação de detecção e correção de erros)
+
+// https://github.com/gui1080/TR1_Trabalho_Deteccao_Correcao_de_Erros
+// (repositório privado na entrega do trabalho)
+
+//-----------------------------------------------------
+
+#define TIPO_DE_ERRO 1
+
+#define ERRO 1
+// ERRO 0 = "Modo caos"
+// ERRO 1 = "Modo Conservador"
+
+#define CHANCE_DO_ERRO 0
+
+//-----------------------------------------------------
 
 // CODIFICAÇÃO RELATIVA AO TRABALHO 2
 // (implementação de camada de enlace)
@@ -39,5 +58,24 @@ int *CamadaDeEnlaceTransmissoraEnquadramentoInsercaoDeBits(int *quadro);
 int *CamadaDeEnlaceReceptoraEnquadramentoInsercaoDeBytes(int *quadro);
 int *CamadaDeEnlaceReceptoraEnquadramentoContagemDeCaracteres(int *quadro);
 int *CamadaDeEnlaceReceptoraEnquadramentoInsercaoDeBits(int *quadro);
+
+
+//-----------------------------------------------------
+// Trabalho 3 - Erros
+//-----------------------------------------------------
+
+// Transmissão 
+int *CamadaEnlaceDadosTransmissoraControledeErro(int *quadro); 
+
+// Transmissão: Controle de erros
+int *CamadaEnlaceDadosTransmissoraControleDeErroBitParidePar(int *quadro); 
+int *CamadaEnlaceDadosTransmissoraControleDeErroBitParideImpar(int *quadro);
+
+// Recepção  
+int *CamadaDeEnlaceReceptoraControleDeErro(int *quadro);
+
+// Recepção: Controle de erros
+int *CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar(int *quadro);
+int *CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadeImpar(int *quadro);
 
 //-----------------------------------------------------
