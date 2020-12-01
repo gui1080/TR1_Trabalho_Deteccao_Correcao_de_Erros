@@ -398,7 +398,7 @@ void MeioDeComunicacao(int fluxoBrutodeBits[])
 
 	int tamanho = find_size(fluxoBrutodeBits);
 
-	printf("\n%d\n", tamanho); 
+	//printf("\n%d\n", tamanho); 
 	
 
 
@@ -414,7 +414,7 @@ void MeioDeComunicacao(int fluxoBrutodeBits[])
 
 		fluxoBrutoDeBitsPontoA[i] = fluxoBrutodeBits[i];
 
-		printf("%d", fluxoBrutoDeBitsPontoA[i]);
+		//printf("%d", fluxoBrutoDeBitsPontoA[i]);
 
 	}
 
@@ -434,13 +434,13 @@ void MeioDeComunicacao(int fluxoBrutodeBits[])
 
 				if(fluxoBrutoDeBitsPontoB[i] == 1){
 
-					printf("\n\nErro simulado na posição %d: 1 -> 0\n\n", i); 
+					//printf("\n\nErro simulado na posição %d: 1 -> 0\n\n", i); 
 
 					fluxoBrutoDeBitsPontoB[i] = 0;
 
 				}else{
 
-					printf("\n\nErro simulado na posição %d: 0 -> 1\n\n", i);
+					//printf("\n\nErro simulado na posição %d: 0 -> 1\n\n", i);
 
 					fluxoBrutoDeBitsPontoB[i] = 1;
 				
@@ -458,7 +458,10 @@ void MeioDeComunicacao(int fluxoBrutodeBits[])
 		int lugar_erro; 
 
 		lugar_erro = (rand()%tamanho); 
-		printf("\n\nLugar de erro: %d\n", lugar_erro); 
+
+		if(CHANCE_DO_ERRO != 0){
+			//printf("\n\nLugar de erro: %d\n", lugar_erro); 
+		}
 
 		aleatorio = (rand()%100);
 
@@ -471,33 +474,37 @@ void MeioDeComunicacao(int fluxoBrutodeBits[])
 
 		if( aleatorio < chance_erro ){
 			if(fluxoBrutoDeBitsPontoB[lugar_erro] == 1){
-				printf("\n\nErro simulado na posição %d: 1 -> 0\n\n", lugar_erro); 
+				//printf("\n\nErro simulado na posição %d: 1 -> 0\n\n", lugar_erro); 
+				
 				fluxoBrutoDeBitsPontoB[lugar_erro] = 0;
+				
 			}
 			else{
-				printf("\n\nErro simulado na posição %d: 0 -> 1\n\n", lugar_erro); 
+				//printf("\n\nErro simulado na posição %d: 0 -> 1\n\n", lugar_erro); 
+				
 				fluxoBrutoDeBitsPontoB[lugar_erro] = 1;
+				
 			}
 		}
-
-		//printf("\nMSG COM ERRO KJJKJK\n"); 
-		//for(i=0 ; i< tamanho ; i++){
-		//	printf("%d", fluxoBrutoDeBitsPontoB[i]); 
-		//}
-		//printf("\n\n");
 
 	}
 
 	cout << endl;
 
+
+	for (i = 0; i < tamanho; i++) // copia A pro B
+	{
+
+		printf("%d", fluxoBrutoDeBitsPontoB[i]);  
+
+	}
+
 	fluxoBrutoDeBitsPontoB[tamanho] = 2;
+
+	cout << endl;
 
 	CamadaFisicaReceptora(fluxoBrutoDeBitsPontoB);
 }
-
-
-//01100110011001010110101010101001011001100110010 0 01010101
-//01100110011001010110101010101001011001100110010 1 01010101
 
 // DECODIFICAÇÃO
 //--------------------------------------------------------------------------------------------
@@ -601,14 +608,14 @@ int *CamadaFisicaReceptoraDecodificacaoManchester(int quadro[])
 	{
 
 		// clock = 01 01 01 01 ...
-		if ((quadro[j] == 0) && (quadro[j + 1] == 1))
+		if ( ((quadro[j] == 0) && (quadro[j + 1] == 1)) || ((quadro[j] == 1) && (quadro[j + 1] == 1)) )
 		{
 			fluxoDecodificado[x] = 0;
 			x++;
 			fluxoDecodificado[x] = 0;
 			x++;
 		}
-		if ((quadro[j] == 1) && (quadro[j + 1] == 0))
+		if ( ((quadro[j] == 1) && (quadro[j + 1] == 0)) || ((quadro[j] == 0) && (quadro[j + 1] == 0)))
 		{
 			fluxoDecodificado[x] = 1;
 			x++;
