@@ -661,7 +661,7 @@ int *CamadaFisicaReceptoraDecodificacaoManchesterDiferencial (int quadro[]){
 	for (j = 0; j < tamanho_fluxo; j=j+2)
 	{
 
-		if ((quadro[j] == 0 && quadro[j+1] == 1)) // temos 01?
+		if ( (quadro[j] == 0 && quadro[j+1] == 1) || (quadro[j] == 1 && quadro[j+1] == 1) ) // temos 01?
 		{
 			if((passado[0] == 0 && passado[1] == 1)){ // era 01?
 
@@ -683,7 +683,7 @@ int *CamadaFisicaReceptoraDecodificacaoManchesterDiferencial (int quadro[]){
 			}
 		}
 
-		else if ((quadro[j] == 1 && quadro[j+1] == 0)) // temos 10?
+		else if ((quadro[j] == 1 && quadro[j+1] == 0) || (quadro[j] == 0 && quadro[j+1] == 0)) // temos 10?
 		{
 			if((passado[0] == 1 && passado[1] == 0)){ // era 10?
 

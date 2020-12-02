@@ -9,7 +9,7 @@
 // https://github.com/gui1080/TR1_Trabalho_Camada_Fisica
 // (repositório privado na entrega do trabalho)
 
-#define CODIFICACAO 0
+#define CODIFICACAO 2
 // CODIFICACAO = 0 (Binária)
 // CODIFICACAO = 1 (Manchester)
 // CODIFICACAO = 2 (Manchester Diferencial)

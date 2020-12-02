@@ -13,17 +13,17 @@
 
 //-----------------------------------------------------
 
-#define TIPO_DE_ERRO 1
+#define TIPO_DE_ERRO 0
 // TIPO_DE_ERRO 0 = Paridade Par
 // TIPO_DE_ERRO 1 = Paridade Impar
 // TIPO_DE_ERRO 2 = Erro CRC
 // TIPO_DE_ERRO 3 = Código de Hamming
 
-#define ERRO 1
+#define ERRO 0
 // ERRO 0 = "Modo caos"
 // ERRO 1 = "Modo Conservador"
 
-#define CHANCE_DO_ERRO 10
+#define CHANCE_DO_ERRO 1
 // Definir um número entre 0 e 100
 
 
