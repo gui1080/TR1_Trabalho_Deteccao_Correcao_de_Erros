@@ -9,12 +9,11 @@
 // https://github.com/gui1080/TR1_Trabalho_Camada_Fisica
 // (repositório privado na entrega do trabalho)
 
-#define CODIFICACAO 2
+#define CODIFICACAO 1
 // CODIFICACAO = 0 (Binária)
 // CODIFICACAO = 1 (Manchester)
 // CODIFICACAO = 2 (Manchester Diferencial)
 // esse define vai atualizar não apenas a codificação como também a decodificação, simplificando os testes
-
 
 // funções auxiliares
 void converte(string mensagem, int* quadro, int pos);

@@ -392,15 +392,11 @@ void MeioDeComunicacao(int fluxoBrutodeBits[])
 	// para concretizar uma simulação entre parte transmissora e receptora
 
 
-	int i = 0;	
+	int i = 0;
 
 	cout << "\033[1;33mMeio de Transmissao\033[0m\n";
 
 	int tamanho = find_size(fluxoBrutodeBits);
-
-	//printf("\n%d\n", tamanho); 
-	
-
 
 	int *fluxoBrutoDeBitsPontoA;
 	int *fluxoBrutoDeBitsPontoB;
@@ -414,12 +410,10 @@ void MeioDeComunicacao(int fluxoBrutodeBits[])
 
 		fluxoBrutoDeBitsPontoA[i] = fluxoBrutodeBits[i];
 
-		//printf("%d", fluxoBrutoDeBitsPontoA[i]);
-
 	}
 
 	int chance_erro = CHANCE_DO_ERRO;
-	int aleatorio = 0; 
+	int aleatorio = 0;
 
 	// "Modo caos"
 	if(ERRO == 0){
@@ -428,22 +422,22 @@ void MeioDeComunicacao(int fluxoBrutodeBits[])
 		{
 
 			fluxoBrutoDeBitsPontoB[i] = fluxoBrutoDeBitsPontoA[i];
-			aleatorio = (rand()%100); 
-			  
+			aleatorio = (rand()%100);
+
 			if( aleatorio < chance_erro ){
 
 				if(fluxoBrutoDeBitsPontoB[i] == 1){
 
-					//printf("\n\nErro simulado na posição %d: 1 -> 0\n\n", i); 
+					printf("\n\033[1;31mErro simulado na posição %d: 1 -> 0\033[0m\n", i);
 
 					fluxoBrutoDeBitsPontoB[i] = 0;
 
 				}else{
 
-					//printf("\n\nErro simulado na posição %d: 0 -> 1\n\n", i);
+					printf("\n\033[1;31mErro simulado na posição %d: 0 -> 1\033[0m\n", i);
 
 					fluxoBrutoDeBitsPontoB[i] = 1;
-				
+
 				}
 
 			}
@@ -453,38 +447,66 @@ void MeioDeComunicacao(int fluxoBrutodeBits[])
 	}
 	// "Modo Conservador"
 	// ERRO = 1
-	else{
+	else if (ERRO == 1){
 
-		int lugar_erro; 
+		int lugar_erro;
 
-		lugar_erro = (rand()%tamanho); 
-
-		if(CHANCE_DO_ERRO != 0){
-			//printf("\n\nLugar de erro: %d\n", lugar_erro); 
-		}
+		lugar_erro = (rand()%tamanho);
 
 		aleatorio = (rand()%100);
 
 		for (i = 0; i < tamanho; i++) // copia A pro B
 		{
 
-			fluxoBrutoDeBitsPontoB[i] = fluxoBrutoDeBitsPontoA[i];  
+			fluxoBrutoDeBitsPontoB[i] = fluxoBrutoDeBitsPontoA[i];
 
 		}
 
 		if( aleatorio < chance_erro ){
 			if(fluxoBrutoDeBitsPontoB[lugar_erro] == 1){
-				//printf("\n\nErro simulado na posição %d: 1 -> 0\n\n", lugar_erro); 
-				
+
+				printf("\n\033[1;31mErro simulado na posição %d: 1 -> 0\033[0m\n", lugar_erro);
+
 				fluxoBrutoDeBitsPontoB[lugar_erro] = 0;
-				
+
 			}
 			else{
-				//printf("\n\nErro simulado na posição %d: 0 -> 1\n\n", lugar_erro); 
-				
+
+				printf("\n\033[1;31mErro simulado na posição %d: 0 -> 1\033[0m\n", lugar_erro);
+
 				fluxoBrutoDeBitsPontoB[lugar_erro] = 1;
-				
+
 			}
+		}
+
+	}
+  // "modo padrão"
+	else {
+
+		for (i = 0; i < tamanho; i++) // copia A pro B
+		{
+
+			fluxoBrutoDeBitsPontoB[i] = fluxoBrutoDeBitsPontoA[i];
+			aleatorio = (rand()%100);
+
+			if( aleatorio == chance_erro && chance_erro != 0){
+
+				if(fluxoBrutoDeBitsPontoB[i] == 1){
+
+					printf("\n\033[1;31mErro simulado na posição %d: 1 -> 0\033[0m\n", i);
+
+					fluxoBrutoDeBitsPontoB[i] = 0;
+
+				}else{
+
+					printf("\n\033[1;31mErro simulado na posição %d: 0 -> 1\033[0m\n", i);
+
+					fluxoBrutoDeBitsPontoB[i] = 1;
+
+				}
+
+			}
+
 		}
 
 	}
@@ -495,7 +517,7 @@ void MeioDeComunicacao(int fluxoBrutodeBits[])
 	for (i = 0; i < tamanho; i++) // copia A pro B
 	{
 
-		printf("%d", fluxoBrutoDeBitsPontoB[i]);  
+		printf("%d", fluxoBrutoDeBitsPontoB[i]);
 
 	}
 

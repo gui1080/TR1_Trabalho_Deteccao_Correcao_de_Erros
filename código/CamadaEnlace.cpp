@@ -50,7 +50,7 @@ void CamadaEnlaceDadosTransmissora(int quadro[])
 
   int x;
 
-  
+
 
   int size2 = find_size(quadro_final);
 
@@ -109,13 +109,13 @@ int *CamadaEnlaceDadosTransmissoraControledeErro(int quadro[]){
     case 3:
 
       cout << "\033[1;36mControle de erro: Codigo de Hamming  \033[0m\n";
-      
+
       size = find_size(quadro);
       quadroControle = new (nothrow) int[size+1];
 
       quadroControle = CamadaEnlaceDadosTransmissoraControleDeErroCodigodeHamming(quadro);
       break;
-      
+
 
   }
 
@@ -123,12 +123,12 @@ int *CamadaEnlaceDadosTransmissoraControledeErro(int quadro[]){
 
   int sizenovo = find_size(quadroControle);
 
-  int i; 
+  int i;
   for (i = 0; i < sizenovo; i++)
   {
     printf("%d", quadroControle[i]);
   }
-  printf("\n");
+  printf("\n\n");
 
   return (quadroControle);
 
@@ -180,20 +180,6 @@ int *CamadaEnlaceDadosTransmissoraControleDeErroBitParideImpar(int quadro[]){
 
   fluxoCodificado[size+4] = 2;
 
-  /*
-
-  printf("\nPARIDADE IMPAR\n");
-
-  for (x = 0; x < (size+1); x++){
-
-    printf("%d", fluxoCodificado[x]);
-
-  }
-
-  printf("\n");
-
-  */
-
   return (fluxoCodificado);
 
 }
@@ -244,18 +230,6 @@ int *CamadaEnlaceDadosTransmissoraControleDeErroBitParidePar(int quadro[]){
 
   fluxoCodificado[size+4] = 2;
 
-  //printf("\nPARIDADE PAR\n");
-
-  //for (x = 0; x < (size+1); x++){
-
-    //printf("%d", fluxoCodificado[x]);
-
-  //}
-
-  //printf("\n");
-
-
-
   return (fluxoCodificado);
 
 }
@@ -288,24 +262,14 @@ int *CamadaEnlaceDadosTransmissoraControleDeErroCRC(int quadro[]){
   quadro_final = new (nothrow) int[size];
 
   for (i=0; i<size-4; i++){
-    quadro_final[i] = quadro[i]; 
-  
+    quadro_final[i] = quadro[i];
+
   }
-  
+
   quadro_final[size-1] = 0;
   quadro_final[size-2] = 0;
   quadro_final[size-3] = 0;
   quadro_final[size-4] = 0;
-
-  /*
-
-  for (i=0; i<size; i++){
-    
-    printf("%d", quadro_final[i]); 
-  
-  }
-
-  */
 
   for(i = 0; i < 4; i++){
 
@@ -331,14 +295,6 @@ int *CamadaEnlaceDadosTransmissoraControleDeErroCRC(int quadro[]){
 
       aux[3] = quadro_final[i];
 
-   
-
-    /*
-    for(j = 0; j < 4; j++){
-      printf("%d", aux[j]);
-    }
-    */
-
     auxi = aux[0];
     for(j = 0; j < 4; j++){
 
@@ -354,14 +310,6 @@ int *CamadaEnlaceDadosTransmissoraControleDeErroCRC(int quadro[]){
     }
 
   }
-
-  /*
-  printf("resposta\n");
-  for(i = 0; i < 4; i++){
-    printf("%d", aux[i]);
-  }
-  printf("\n");
-  */
 
   int remainder = 0;
   j = 4;
@@ -411,16 +359,16 @@ int *CamadaEnlaceDadosTransmissoraControleDeErroCodigodeHamming(int quadro[]){
 
   int *fluxoCodificado;
 
-  int x, pot; 
+  int x, pot;
 
-  pot = 2; 
+  pot = 2;
 
-  int conta_espaco_novo = 0; 
+  int conta_espaco_novo = 0;
 
   while(pot < size){
 
-    pot *= 2;   
-    conta_espaco_novo++; 
+    pot *= 2;
+    conta_espaco_novo++;
 
   }
 
@@ -875,8 +823,6 @@ void CamadaEnlaceDadosReceptora(int quadro[])
 
   //-------------------------------------
 
-  //int i = find_size(quadro);
-
   int *quadro_novo;
 
   quadro_novo = new (nothrow) int[i-1];
@@ -901,7 +847,7 @@ void CamadaEnlaceDadosReceptora(int quadro[])
 int *CamadaDeEnlaceReceptoraControleDeErro(int quadro[]){
 
   int tipo_de_erro = TIPO_DE_ERRO;
-  int size; 
+  int size;
   int *quadro_controle;
 
   switch(tipo_de_erro){
@@ -933,7 +879,7 @@ int *CamadaDeEnlaceReceptoraControleDeErro(int quadro[]){
 
   }
 
-  int i; 
+  int i;
 
   printf("\n");
 
@@ -943,7 +889,7 @@ int *CamadaDeEnlaceReceptoraControleDeErro(int quadro[]){
   {
     printf("%d", quadro_controle[i]);
   }
-  printf("\n");
+  printf("\n\n");
 
   return (quadro_controle);
 
@@ -977,13 +923,11 @@ int *CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadeImpar(int quadro[]){
 
   resultado = (acumulador % 2);
 
-  //printf("\nresultado:%d\n", resultado);
-
   if(resultado == 1){
 
-    //printf("\nDEBOA\n");
-
     // certo
+
+    cout << "\033[1;32mNao foi encontrado nenhum erro ao se checar o Bit de Paridade Impar!\n \033[0m";
 
     for (x = 0; x < size-4; x++){
 
@@ -994,29 +938,15 @@ int *CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadeImpar(int quadro[]){
   }
   else{
 
-    cout << "\033[1;31m \nAtenção! Um erro foi encontrado ao se checar o Bit de Paridade Impar!\nO programa será encerrado agora.\n \033[0m\n";
+    cout << "\033[1;31mAtenção! Um erro foi encontrado ao se checar o Bit de Paridade Impar!\nO programa será encerrado agora.\n \033[0m";
 
     exit(0);
 
   }
 
-
-  //printf("\nACHANDO A PARIDADE IMPAR\n");
-
-  //for (x = 0; x < (size-4); x++){
-
-    //printf("%d", fluxoCodificado[x]);
-
-  //}
-
-  //printf("\n");
-
   fluxoCodificado[size-4] = 2;
 
   return (fluxoCodificado);
-
-
-
 
 }
 
@@ -1045,13 +975,9 @@ int *CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar(int quadro[]){
 
   resultado = (acumulador % 2);
 
-  //printf("\nresultado:%d\n", resultado);
-
   if(resultado == 0){
 
-    //printf("\nDEBOA\n");
-
-    // certo
+    cout << "\033[1;32mNao foi encontrado nenhum erro ao se checar o Bit de Paridade Par\n \033[0m";
 
     for (x = 0; x < size-4; x++){
 
@@ -1062,22 +988,11 @@ int *CamadaEnlaceDadosReceptoraControleDeErroBitDeParidadePar(int quadro[]){
   }
   else{
 
-    cout << "\033[1;31m \nAtenção! Um erro foi encontrado ao se checar o Bit de Paridade Par!\nO programa será encerrado agora.\n \033[0m\n";
+    cout << "\033[1;31mAtenção! Um erro foi encontrado ao se checar o Bit de Paridade Par!\nO programa será encerrado agora.\n \033[0m";
 
     exit(0);
 
   }
-
-
-  //printf("\nACHANDO A PARIDADE PAR\n");
-
-  //for (x = 0; x < (size-4); x++){
-
-    //printf("%d", fluxoCodificado[x]);
-
-  //}
-
-  //printf("\n");
 
   fluxoCodificado[size-4] = 2;
 
@@ -1116,20 +1031,12 @@ int *CamadaEnlaceDadosReceptoraControleDeErroCRC(int quadro[]){
 
   for(i = 4; i < size; i++){
 
-    //if(i != size - 1){
-
       for(j = 0; j < 3; j++){
 
         aux[j] = aux[j+1];
 
       }
       aux[3] = quadro[i];
-
-    //}
-
-    for(j = 0; j < 4; j++){
-      //printf("%d", aux[j]);
-    }
 
     auxi = aux[0];
     for(j = 0; j < 4; j++){
@@ -1147,27 +1054,19 @@ int *CamadaEnlaceDadosReceptoraControleDeErroCRC(int quadro[]){
 
   }
 
-  //printf("resposta\n");
-  //for(i = 0; i < 4; i++){
-
-    //printf("%d", aux[i]);
-
-  //}
-  //printf("\n");
-
   if((aux[0] == 1) || (aux[1] == 1) || (aux[2] == 1) || (aux[3] == 1) ){
 
-    cout << "\033[1;31m \nResto diferente de zero: Um erro foi detectado!\n \033[0m\n";
+    cout << "\033[1;31mResto diferente de zero: Um erro foi detectado!\n \033[0m";
 
-    exit(0);  
+    exit(0);
   }
   else{
-    
-    cout << "\033[1;31m \nResto igual à zero: Não foi detectado nenhum erro.\n \033[0m\n";
-    
+
+    cout << "\033[1;32mResto igual à zero: Não foi detectado nenhum erro.\n \033[0m";
+
   }
 
-  
+
   int cont_aux;
   j = 4;
 
@@ -1176,53 +1075,7 @@ int *CamadaEnlaceDadosReceptoraControleDeErroCRC(int quadro[]){
     fluxoCodificado[i] = quadro[i];
   }
 
-  /*
-  for(i = size-1; i >= 0; i--){
-
-    if(j > 0){
-
-      auxi = quadro[i] - aux[j-1]; //- remainder;
-      //j--;
-
-    } else {
-
-      auxi = quadro[i];// - remainder;
-
-    }
-
-    if(auxi < 0){
-
-      cont_aux = i;
-      while(auxi < 0) {
-
-        auxi = quadro[cont_aux-1] - 1;
-        cont_aux--;
-
-      }
-
-      quadro[cont_aux] = quadro[cont_aux] - 1;
-
-    }
-    if(j > 0){
-
-      fluxoCodificado[i] = 1 - aux[j - 1];
-
-    } else {
-
-      fluxoCodificado[i] = quadro[i];
-
-    }
-    j--;
-  }
-  */
-
   fluxoCodificado[size] = 2;
-
-  //printf("fluxoCodificado:\n");
-  //for(i = 0; i < size; i++){
-  //printf("%d", fluxoCodificado[i]);
-  //}
-  //printf("\n");
 
   return fluxoCodificado;
 
